@@ -1,0 +1,16 @@
+{
+  "name": "practise-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "author": "Hai-Vasyl <hai.vasyl20@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "http-server -c-1",
+    "format": "prettier js css --write"
+  },
+  "devDependencies": {
+    "http-server": "^0.12.3",
+    "prettier": "^2.2.1"
+  }
+}
