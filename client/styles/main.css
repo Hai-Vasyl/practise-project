@@ -1,0 +1,206 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*::after {
+  box-sizing: border-box;
+}
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --main: whitesmoke;
+  --main-second: white;
+  --main-dark: lightgrey;
+  --main-accent: #ff482f;
+  --main-accent-dark: #f0432d;
+  --main-night: rgb(69, 69, 69);
+
+  --danger: rgb(231, 1, 1);
+}
+
+body {
+  font-size: 1em;
+  font-family: "Quicksand", sans-serif;
+  background-color: var(--main);
+}
+
+button,
+input {
+  border: none;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.hidden {
+  pointer-events: none;
+}
+
+.btn {
+  padding: 13px 15px;
+  transition: 0.3s ease;
+}
+.btn__prime {
+  background-color: var(--main-accent);
+  color: #fff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.5), 0px 3px 5px rgba(0, 0, 0, 0.1);
+}
+.btn__prime:hover {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  background-color: var(--main-accent-dark);
+}
+.btn__simple {
+}
+.btn__simple:hover {
+  background-color: var(--main);
+}
+
+/* ------------ navbar ----------- */
+
+@keyframes scale-up {
+  from {
+    height: 0;
+  }
+  to {
+    height: 3px;
+  }
+}
+
+.nav {
+  background-color: var(--main-second);
+  border-bottom: 1px solid var(--main-dark);
+  box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.1), 0px 0px 3px rgba(0, 0, 0, 0.2);
+}
+.nav__links {
+  width: 980px;
+  max-width: 100%;
+  min-height: 54px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.nav__navbar {
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+.nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #000;
+  margin-left: 5px;
+  padding: 15px 13px;
+  transition: 0.3s ease;
+  position: relative;
+}
+.nav__link:hover {
+  background-color: var(--main);
+}
+.nav__link:first-child {
+  margin-left: 0px;
+}
+.nav__icon {
+  margin-right: 7px;
+}
+.nav__link--active {
+  background-color: var(--main);
+}
+.nav__link--active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background-color: var(--main-accent);
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  transition: 0.3s ease;
+  animation: scale-up 0.3s ease;
+}
+.nav__logo {
+  font-family: "Kaushan Script", cursive;
+  font-size: 1.4em;
+  text-decoration: none;
+  color: #000;
+}
+.nav__login {
+  padding: 7px 10px;
+  border: 1px solid var(--main-dark);
+  transition: 0.3s ease;
+}
+.nav__login:hover {
+  background-color: var(--main);
+}
+
+/* ------------ auth form ----------- */
+
+.form-auth {
+  width: 400px;
+  max-width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  background-color: var(--main-second);
+  box-shadow: 0px 0px 80px rgba(0, 0, 0, 0.2), 0px 0px 40px rgba(0, 0, 0, 0.3);
+}
+.form-auth__title {
+  text-align: center;
+  font-size: 1.5em;
+  padding: 15px 0;
+  color: var(--main-night);
+  background-color: var(--main);
+  border-bottom: 1px solid var(--main-dark);
+  box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.1), 0px 0px 3px rgba(0, 0, 0, 0.2);
+}
+.form-auth__fields {
+  padding: 25px;
+  padding-bottom: 10px;
+}
+.form-auth__btns {
+  padding: 25px;
+  padding-top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-auth__btns > *:first-child {
+  margin-right: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.field--hide {
+  display: none;
+}
+.field__label {
+  margin-bottom: 4px;
+}
+.field__input {
+  padding: 7px;
+  background-color: var(--main);
+  border-bottom: 1px solid var(--main-dark);
+}
+.field__error {
+  font-size: 0.8em;
+  color: var(--danger);
+  height: 16px;
+}
