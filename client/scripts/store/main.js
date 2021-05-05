@@ -9,6 +9,7 @@ export const store = {
     users: [],
   },
   user: {
+    id: "",
     firstname: "",
     lastname: "",
     email: "",

@@ -13,7 +13,7 @@ export default async function () {
         <label class="field__label" for="${item.id}">${item.label}</label>
         <input class="field__input" type="${item.type}" name="${item.id}" id="${
         item.id
-      }-input"/>
+      }-input" data-input/>
         <span class="field__error" id="${item.id}-error"></span>
       </div>`
     );

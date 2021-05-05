@@ -7,6 +7,7 @@ import About from "./pages/About.js";
 import Navbar from "./components/Navbar.js";
 import FormAuth from "./components/FormAuth.js";
 import { store, setStore } from "./store/main.js";
+import { getColor } from "./helpers/randomColor.js";
 
 const render = async (content) => {
   const navbar = await Navbar();
@@ -47,10 +48,85 @@ export const setPage = async () => {
 document.addEventListener("DOMContentLoaded", async () => {
   await setPage();
 
+  document.body.addEventListener("input", (event) => {
+    if (event.target.matches("[data-input]")) {
+      const inputId = event.target.getAttribute("name");
+      document.getElementById(`${inputId}-error`).innerHTML = "";
+    }
+  });
+
   document.body.addEventListener("submit", (event) => {
     if (event.target.matches("#auth-form")) {
       event.preventDefault();
-      console.log("Submited");
+
+      const authForm = document.getElementById("auth-form");
+      const fields = {
+        firstname: document.getElementById("firstname-input").value,
+        lastname: document.getElementById("lastname-input").value,
+        email: document.getElementById("email-input").value,
+        password: document.getElementById("password-input").value,
+      };
+
+      const isLogin = authForm.getAttribute("data-login");
+      let isError = false;
+
+      Object.keys(fields).forEach((key) => {
+        if (isLogin && (key === "firstname" || key === "lastname")) {
+          return;
+        } else if (!fields[key]) {
+          isError = true;
+          document.getElementById(`${key}-error`).innerHTML =
+            "This field cannot be empty!";
+        }
+      });
+
+      if (isError) {
+        return;
+      }
+
+      let user = store.db.users.find((user) => user.email === fields.email);
+      if (isLogin) {
+        if (!user) {
+          document.getElementById(`email-error`).innerHTML =
+            "This email is not exists, choose another one!";
+          return;
+        }
+        user = store.db.users.find(
+          (user) =>
+            user.email === fields.email && user.password === fields.password,
+        );
+        if (!user) {
+          document.getElementById(`password-error`).innerHTML =
+            "Password is wrong, please try again!";
+          return;
+        }
+
+        setStore(null, user.id, true);
+      } else {
+        if (user) {
+          document.getElementById(`email-error`).innerHTML =
+            "This email already exists, choose another one!";
+          return;
+        }
+
+        const { firstname, lastname, email, password } = fields;
+        const newUser = {
+          id: Date.now(),
+          firstname,
+          lastname,
+          email,
+          password,
+          color: getColor(),
+          ava: "",
+          date: new Date(),
+        };
+
+        setStore(
+          { ...store.db, users: [...store.db.users, { ...newUser }] },
+          newUser.id,
+          true,
+        );
+      }
     }
   });
 
@@ -59,8 +135,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       event.preventDefault();
       moveTo(event.target.href);
     } else if (event.target.matches("#btn-flip-auth-form")) {
+      document.getElementById("firstname-error").innerHTML = "";
+      document.getElementById("lastname-error").innerHTML = "";
+      document.getElementById("email-error").innerHTML = "";
+      document.getElementById("password-error").innerHTML = "";
+
       document.getElementById("firstname").classList.toggle("field--hide");
       document.getElementById("lastname").classList.toggle("field--hide");
+
       const btnSubmit = document.getElementById("btn-submit-auth-form");
       const authForm = document.getElementById("auth-form");
       const authTitle = document.getElementById("auth-title");
@@ -77,7 +159,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         event.target.innerHTML = "Sign Up";
       }
     } else if (event.target.matches("#btn-change")) {
-      console.log("dsf===");
+      console.log("-----");
       let newAuth = store.auth;
 
       if (!store.auth) {
@@ -88,8 +170,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       setStore(null, newAuth);
       console.log("Update");
-    } else if (event.target.matches("#btn-output")) {
-      console.log({ dataO: store });
     } else if (event.target.matches("[data-toggle-auth-form]")) {
       console.log("toggle auth");
     }
