@@ -152,7 +152,7 @@ button {
 .nav__links {
   width: 980px;
   max-width: 100%;
-  min-height: 54px;
+  min-height: 60px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -171,7 +171,7 @@ button {
   text-decoration: none;
   color: #000;
   margin-left: 5px;
-  padding: 15px 13px;
+  padding: 18px 13px;
   transition: 0.3s ease;
   position: relative;
 }
@@ -221,7 +221,7 @@ button {
 .menu__dropdown {
   transition: 0.3s ease;
   position: absolute;
-  top: 61px;
+  top: 66px;
   right: -10px;
   width: 200px;
   background-color: var(--main-second);
@@ -263,7 +263,7 @@ button {
   border-bottom-color: var(--main-accent);
   position: absolute;
   top: -22px;
-  right: 23px;
+  right: 26px;
   pointer-events: none;
 }
 
@@ -271,7 +271,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
+  padding: 7px 4px;
   transition: 0.3s ease;
 }
 .btn-menu--active {

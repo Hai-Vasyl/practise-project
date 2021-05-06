@@ -33,7 +33,7 @@ const moveTo = (path) => {
   setPage();
 };
 
-export const setPage = async () => {
+export const setPage = () => {
   const routes = [
     { path: "/", title: "Home", component: Home },
     { path: "/users", title: "All users", component: Users },
@@ -43,7 +43,28 @@ export const setPage = async () => {
     { path: "/user/:userid", title: "My profile", component: Profile },
   ];
 
-  let route = routes.find((route) => route.path === location.pathname);
+  let path = location.pathname;
+  let route;
+
+  if (path.includes("?")) {
+    const queryIndex = path.indexOf("?");
+    path = path.slice(0, queryIndex);
+  }
+
+  const locationParts = path.split("/");
+  routes.forEach((item) => {
+    const routeParts = item.path.split("/");
+    if (routeParts.length === locationParts.length) {
+      if (
+        item.path === path ||
+        (item.path.includes(":") &&
+          routeParts.slice(0, -1).join("/") ===
+            locationParts.slice(0, -1).join("/"))
+      ) {
+        route = item;
+      }
+    }
+  });
 
   if (!route) {
     route = routes[0];
@@ -53,7 +74,7 @@ export const setPage = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await setPage();
+  setPage();
 
   document.body.addEventListener("input", (event) => {
     if (event.target.matches("[data-input]")) {
