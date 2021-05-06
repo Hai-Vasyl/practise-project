@@ -19,6 +19,8 @@
   --main-accent-dark: #f0432d;
   --main-night: rgb(69, 69, 69);
 
+  --second-accent: #2f9aff;
+
   --danger: rgb(231, 1, 1);
 }
 
@@ -44,6 +46,63 @@ button {
 .hidden {
   pointer-events: none;
 }
+
+.bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+}
+.bg--active {
+  opacity: 1;
+  visibility: visible;
+}
+.bg-clear {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 8;
+  display: none;
+}
+.bg-clear--active {
+  display: block;
+}
+.btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2em;
+  pointer-events: none;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 50%;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  font-size: 0.8em;
+}
+/* .avatar__middle {
+  font-size: 4em;
+}
+.avatar__large {
+  font-size: 6em;
+} */
 
 .btn {
   padding: 13px 15px;
@@ -76,9 +135,19 @@ button {
 }
 
 .nav {
+  position: relative;
+  z-index: 8;
   background-color: var(--main-second);
   border-bottom: 1px solid var(--main-dark);
   box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.1), 0px 0px 3px rgba(0, 0, 0, 0.2);
+}
+.nav__border {
+  height: 5px;
+  background-image: linear-gradient(
+    to right,
+    var(--main-accent),
+    var(--second-accent)
+  );
 }
 .nav__links {
   width: 980px;
@@ -146,6 +215,81 @@ button {
   background-color: var(--main);
 }
 
+.menu {
+  position: relative;
+}
+.menu__dropdown {
+  transition: 0.3s ease;
+  position: absolute;
+  top: 61px;
+  right: -10px;
+  width: 200px;
+  background-color: var(--main-second);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px 0;
+  border-radius: 13px;
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1), 0px 0px 10px rgba(0, 0, 0, 0.3);
+  border-top: 3px solid var(--main-accent);
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.9);
+}
+.menu__dropdown--active {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+.menu__link {
+  padding: 8px 25px;
+  margin-left: 0;
+  justify-content: flex-start;
+}
+.menu__link.nav__link--active::after {
+  content: "";
+  display: none;
+}
+.menu__link:nth-child(3) {
+  border-top: 1px solid var(--main);
+}
+.menu__link .nav__icon {
+  margin-right: 7px;
+}
+.menu__triangle {
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-bottom-color: var(--main-accent);
+  position: absolute;
+  top: -22px;
+  right: 23px;
+  pointer-events: none;
+}
+
+.btn-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: 0.3s ease;
+}
+.btn-menu--active {
+  background-color: var(--main);
+}
+.btn-menu__title {
+  margin-right: 7px;
+}
+.btn-menu__avatar {
+  display: block;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid var(--main-dark);
+  padding: 3px;
+  background-color: var(--main-second);
+}
+
 /* ------------ auth form ----------- */
 
 .form-auth {
@@ -155,9 +299,18 @@ button {
   top: 50%;
   left: 50%;
   overflow: hidden;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.9);
+  z-index: 11;
   background-color: var(--main-second);
   box-shadow: 0px 0px 80px rgba(0, 0, 0, 0.2), 0px 0px 40px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+}
+.form-auth--active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
 }
 .form-auth__title {
   text-align: center;
@@ -182,6 +335,8 @@ button {
 .form-auth__btns > *:first-child {
   margin-right: 10px;
 }
+
+/* ------------ field form ----------- */
 
 .field {
   display: flex;

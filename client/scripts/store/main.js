@@ -19,11 +19,11 @@ export const store = {
   },
 };
 
-if (auth) {
-  store.user = store.db.users.find((user) => user.id === auth);
-}
 if (db) {
   store.db = JSON.parse(db);
+}
+if (auth) {
+  store.user = store.db.users.find((user) => user.id === Number(auth));
 }
 
 export const setStore = (db, auth, isAuthChanged) => {
@@ -31,13 +31,13 @@ export const setStore = (db, auth, isAuthChanged) => {
     store.db = db;
     localStorage.setItem("db", JSON.stringify(db));
   }
-  if (!!auth) {
+  if (auth !== null) {
     store.auth = auth;
     localStorage.setItem("auth", auth);
   }
   if (isAuthChanged) {
     store.user = store.auth
-      ? store.db.users.find((user) => user.id === store.auth)
+      ? store.db.users.find((user) => user.id === Number(store.auth))
       : {
           firstname: "",
           lastname: "",

@@ -15,6 +15,13 @@ const render = async (content) => {
   const auth = await FormAuth();
 
   document.getElementById("root").innerHTML = `
+    <div class="bg" id="bg" >
+      <span class="material-icons-outlined btn-close">
+      close
+      </span>
+    </div>
+    <div class="bg-clear" id="bg-clear" >
+    </div>
     ${navbar}
     ${auth}
     ${body}
@@ -158,20 +165,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         btnSubmit.innerHTML = "Login";
         event.target.innerHTML = "Sign Up";
       }
-    } else if (event.target.matches("#btn-change")) {
-      console.log("-----");
-      let newAuth = store.auth;
-
-      if (!store.auth) {
-        newAuth = 1;
-      } else {
-        newAuth++;
-      }
-
-      setStore(null, newAuth);
-      console.log("Update");
+    } else if (event.target.matches("#bg")) {
+      document
+        .getElementById("auth-form")
+        .classList.remove("form-auth--active");
+      event.target.classList.remove("bg--active");
+    } else if (event.target.matches("#bg-clear")) {
+      document
+        .getElementById("menu_dropdown")
+        .classList.remove("menu__dropdown--active");
+      document.getElementById("btn-menu").classList.remove("btn-menu--active");
+      event.target.classList.remove("bg-clear--active");
+    } else if (event.target.matches("#btn-menu")) {
+      event.target.classList.toggle("btn-menu--active");
+      document
+        .getElementById("menu_dropdown")
+        .classList.toggle("menu__dropdown--active");
+      document.getElementById("bg-clear").classList.toggle("bg-clear--active");
     } else if (event.target.matches("[data-toggle-auth-form]")) {
-      console.log("toggle auth");
+      document.getElementById("auth-form").classList.add("form-auth--active");
+      document.getElementById("bg").classList.add("bg--active");
+    } else if (event.target.matches("#btn-logout")) {
+      setStore(null, "", true);
     }
   });
 });
