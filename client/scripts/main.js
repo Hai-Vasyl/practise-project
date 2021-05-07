@@ -76,6 +76,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (event.target.matches("[data-input]")) {
       const inputId = event.target.getAttribute("name");
       document.getElementById(`${inputId}-error`).innerHTML = "";
+    } else if (event.target.matches("#search-input")) {
+      if (!event.target.value) {
+        const filter = getParamQuery("filter") || "partial";
+        const type = getParamQuery("type") || "all";
+        const sort = getParamQuery("sort") || "relevance";
+
+        moveTo(`/home?page=1&filter=${filter}&type=${type}&sort=${sort}`);
+      }
     }
   });
 
@@ -173,9 +181,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!search.trim()) {
         return;
       }
-      const filter = getParamQuery("filter");
-      const type = getParamQuery("type");
-      const sort = getParamQuery("sort");
+      const filter = getParamQuery("filter") || "partial";
+      const type = getParamQuery("type") || "all";
+      const sort = getParamQuery("sort") || "relevance";
 
       moveTo(
         `/home?page=1&filter=${filter}&type=${type}&sort=${sort}&search=${search}`,
@@ -187,6 +195,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (event.target.matches("[data-link]")) {
       event.preventDefault();
       moveTo(event.target.href);
+    } else if (event.target.matches("#btn-toggle-filter")) {
+      event.target.classList.toggle("filter-toggle__btn--active");
+      document
+        .getElementById("toolbar-menu")
+        .classList.toggle("toolbar__wrapper--active");
+    } else if (event.target.matches("#btn-reset-search")) {
+      const filter = getParamQuery("filter") || "partial";
+      const type = getParamQuery("type") || "all";
+      const sort = getParamQuery("sort") || "relevance";
+
+      moveTo(`/home?page=1&filter=${filter}&type=${type}&sort=${sort}`);
     } else if (event.target.matches("#btn-flip-auth-form")) {
       document.getElementById("firstname-error").innerHTML = "";
       document.getElementById("lastname-error").innerHTML = "";
