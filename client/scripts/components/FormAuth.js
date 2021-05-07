@@ -24,8 +24,8 @@ export default async function () {
       <h1 class="form-auth__title" id="auth-title">Login</h1>
       <div class="form-auth__fields">${fields}</div>
       <div class="form-auth__btns">
-        <button class="btn btn__prime" id="btn-submit-auth-form">Login</button>
-        <button class="btn btn__simple" type="button" id="btn-flip-auth-form" >Sign Up</button>
+        <button class="btn btn--prime" id="btn-submit-auth-form">Login</button>
+        <button class="btn btn--simple" type="button" id="btn-flip-auth-form" >Sign Up</button>
       </div>
     </form>
   `;

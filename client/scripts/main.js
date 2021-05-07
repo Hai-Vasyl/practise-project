@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar.js";
 import FormAuth from "./components/FormAuth.js";
 import { store, setStore } from "./store/main.js";
 import { getColor } from "./helpers/randomColor.js";
+import { getParamQuery } from "./helpers/getParamsQuery.js";
 
 const render = async (content) => {
   const navbar = await Navbar();
@@ -46,11 +47,6 @@ export const setPage = () => {
   let path = location.pathname;
   let route;
 
-  if (path.includes("?")) {
-    const queryIndex = path.indexOf("?");
-    path = path.slice(0, queryIndex);
-  }
-
   const locationParts = path.split("/");
   routes.forEach((item) => {
     const routeParts = item.path.split("/");
@@ -80,6 +76,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (event.target.matches("[data-input]")) {
       const inputId = event.target.getAttribute("name");
       document.getElementById(`${inputId}-error`).innerHTML = "";
+    }
+  });
+
+  document.body.addEventListener("change", (event) => {
+    if (event.target.matches("[data-toolbar-select]")) {
+      const filter = document.getElementById("filter-picker").value;
+      const type = document.getElementById("type-picker").value;
+      const sort = document.getElementById("sort-picker").value;
+      const search = getParamQuery("search");
+
+      moveTo(
+        `/home?page=1&filter=${filter}&type=${type}&sort=${sort}${
+          search ? `&search=${search}` : ""
+        }`,
+      );
     }
   });
 
@@ -155,6 +166,20 @@ document.addEventListener("DOMContentLoaded", async () => {
           true,
         );
       }
+    } else if (event.target.matches("#search-form")) {
+      event.preventDefault();
+
+      const search = document.getElementById("search-input").value;
+      if (!search.trim()) {
+        return;
+      }
+      const filter = getParamQuery("filter");
+      const type = getParamQuery("type");
+      const sort = getParamQuery("sort");
+
+      moveTo(
+        `/home?page=1&filter=${filter}&type=${type}&sort=${sort}&search=${search}`,
+      );
     }
   });
 

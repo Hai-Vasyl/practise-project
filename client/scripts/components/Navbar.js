@@ -35,24 +35,6 @@ export default async function () {
           </span>`,
     },
   ];
-  // : [
-  //     { title: "Discover", href: "/" },
-  //     { title: "Users", href: "/users" },
-  //     {
-  //       title: "Favourites",
-  //       href: `/favourites/${store.auth}`,
-  //       icon: `<span class="material-icons-outlined">
-  //       favorite_border
-  //       </span>`,
-  //     },
-  //     {
-  //       title: "Profile",
-  //       href: `/profile/${store.auth}`,
-  //       icon: `<span class="material-icons-outlined">
-  //       account_circle
-  //       </span>`,
-  //     },
-  //   ];
 
   const links = dataLinks.reduce((acumulator, item) => {
     if (item.isBtn) {
