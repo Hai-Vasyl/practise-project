@@ -1,17 +1,24 @@
-// import { fetchData } from "../helpers/fetchData.js";
+import { fetchData } from "../helpers/fetchData.js";
 import { getParamQuery } from "../helpers/getParamsQuery.js";
 import FieldPicker from "../components/FieldPicker.js";
+import BookCard from "../components/BookCard.js";
+import Pagination from "../components/Pagination.js";
 
 export default async function () {
+  const page = getParamQuery("page");
   const filter = getParamQuery("filter");
   const type = getParamQuery("type");
   const sort = getParamQuery("sort");
   const search = getParamQuery("search");
+  const amountItems = 24;
 
-  // const books = await fetchData(
-  //   `https://www.googleapis.com/books/v1/volumes?q=${"Harry"}&startIndex=${}&maxResults=${}&filter=${"free-ebooks"}&printType=${"magazines"}&orderBy=${"newest"}&projection=lite`,
-  // );
+  const booksData = await fetchData(
+    `https://www.googleapis.com/books/v1/volumes?q=${search}&startIndex=${
+      page - 1
+    }&maxResults=${amountItems}&filter=${filter}&printType=${type}&orderBy=${sort}&projection=lite`,
+  );
 
+  console.log({ books: booksData });
   const filterPicker = await FieldPicker(
     "Filter by",
     "filter-picker",
@@ -43,6 +50,18 @@ export default async function () {
     ],
     sort || "relevance",
   );
+
+  // amountItems,
+  // amountItemsPage,
+  // currentPageNumber,
+  // redirectLink
+
+  const books = booksData.items.reduce((acumulator, item) => {
+    const book = BookCard(item);
+    return acumulator + book;
+  }, "");
+  const pagination = Pagination(booksData.totalItems, amountItems, page, "");
+
   return `
     <div>
       <header class="header">
@@ -85,9 +104,10 @@ export default async function () {
           ${sortPicker}
         </div>
       </div>
-      <div>
-        sdfsdf
+      <div class="books">
+        ${books}
       </div>
+      ${pagination}
     </div>
   `;
 }

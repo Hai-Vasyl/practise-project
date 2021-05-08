@@ -588,3 +588,148 @@ select {
   background-color: var(--main-second);
   color: #000;
 }
+
+/* ------------ Book card ----------- */
+
+.books {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  width: 980px;
+  max-width: 100%;
+  padding: 30px 20px;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 5px 6px;
+  border-left: 1px solid var(--main-dark);
+  border-right: 1px solid var(--main-dark);
+  background-image: linear-gradient(
+    to top,
+    transparent,
+    white,
+    white,
+    white,
+    transparent,
+    transparent
+  );
+}
+.card__link {
+  display: block;
+  position: relative;
+  height: 0;
+  padding-bottom: 140%;
+  overflow: hidden;
+  filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.3));
+}
+.card__thumbnail {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: scale(1);
+  transition: 0.5s ease;
+}
+.card__link:hover .card__thumbnail {
+  transform: scale(1.1);
+}
+.card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transform: translateX(-100%);
+  transition: 0.3s ease;
+  z-index: 2;
+  display: flex;
+}
+.card__overlay > * {
+  margin: auto;
+  display: block;
+  color: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+}
+.card__icon {
+  display: block;
+  font-size: 4em;
+  text-align: center;
+}
+.card__more {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 1.1em;
+}
+.card__link:hover .card__overlay {
+  transform: translateX(0%);
+  opacity: 1;
+}
+.card__title {
+  display: inline-block;
+  text-decoration: none;
+  color: #000;
+  font-size: 1em;
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  text-align: center;
+}
+.card__subtitle {
+  display: block;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+/* ------------ Page pagination ----------- */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 20px 0;
+  border-top: 1px solid var(--main-dark);
+}
+
+.btn-number,
+.pagination__arrow {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  transition: 0.3s ease;
+  border: 1px solid var(--main-dark);
+  background-color: var(--main-second);
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2), 0px 0px 2px rgba(0, 0, 0, 0.1);
+}
+.btn-number > span,
+.pagination__arrow > span {
+  margin: auto;
+  color: #000;
+}
+.btn-number--active {
+  background-color: var(--main-accent);
+}
+.btn-number--active > span {
+  color: #fff;
+}
+.pagination__arrow {
+  background-color: var(--main);
+  cursor: default;
+  box-shadow: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+.pagination__arrow--active {
+  background-color: var(--main-second);
+  cursor: pointer;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2), 0px 0px 2px rgba(0, 0, 0, 0.1);
+}
